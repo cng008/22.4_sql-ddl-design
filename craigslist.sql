@@ -38,7 +38,7 @@ CREATE TABLE posts
     description TEXT,
     user_id INTEGER REFERENCES users ON DELETE SET NULL,
     location_id INTEGER REFERENCES region ON DELETE SET NULL,
-    category_id INTEGER REFERENCES region ON DELETE SET NULL
+    category_id INTEGER REFERENCES categories ON DELETE SET NULL
 );
 
 

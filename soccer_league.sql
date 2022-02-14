@@ -36,13 +36,21 @@ CREATE TABLE referees
     name TEXT NOT NULL
 );
 
+CREATE TABLE season
+(
+    id SERIAL PRIMARY KEY,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL
+);
+
 CREATE TABLE games
 (
     id SERIAL PRIMARY KEY,
     home_team INTEGER REFERENCES teams ON DELETE SET NULL,
     away_team INTEGER REFERENCES teams ON DELETE SET NULL,
     location TEXT NOT NULL,
-    date TEXT NOT NULL,
+    date DATE NOT NULL,
+    season_id INTEGER REFERENCES season ON DELETE SET NULL,
     ref_id INTEGER REFERENCES referees ON DELETE SET NULL
 );
 
@@ -52,14 +60,6 @@ CREATE TABLE goals
     player_id INTEGER REFERENCES players ON DELETE CASCADE,
     game_id INTEGER REFERENCES games ON DELETE SET NULL
 );
-
-CREATE TABLE season
-(
-    id SERIAL PRIMARY KEY,
-    start_date TEXT NOT NULL,
-    end_date TEXT NOT NULL
-);
-
 
 INSERT INTO teams (name, country, league_rank)
 VALUES
@@ -80,15 +80,15 @@ VALUES
 ('Paul Tierney'),
 ('Mike Jones');
 
-INSERT INTO games (home_team, away_team, location, date, ref_id)
+INSERT INTO season (start_date, end_date)
+VALUES ('2019-09-14', '2020-03-19');
+
+INSERT INTO games (home_team, away_team, location, date, season_id, ref_id)
 VALUES
-(1, 2, 'UK', '2019-10-29', 1),
-(3, 4, 'Spain', '2020-01-25', 2);
+(1, 2, 'UK', '2019-10-29', 1, 1),
+(3, 4, 'Spain', '2020-01-25', 1, 2);
 
 INSERT INTO goals (player_id, game_id)
 VALUES
 (3, 1),
 (2, 2);
-
-INSERT INTO season (start_date, end_date)
-VALUES ('2019-09-14', '2020-03-19');

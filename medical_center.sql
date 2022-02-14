@@ -37,8 +37,9 @@ CREATE TABLE patients
 (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
+    birthday DATE NOT NULL,
     insurance TEXT NOT NULL,
-    birthday TEXT NOT NULL,
+    disease INTEGER REFERENCES doctors ON DELETE SET NULL,
     doc_id INTEGER REFERENCES doctors ON DELETE SET NULL,
     center_id INTEGER REFERENCES centers ON DELETE SET NULL
 );
@@ -62,7 +63,7 @@ VALUES
 ('Dr. Strange', 1),
 ('Nurse Joy', 2);
 
-INSERT INTO patients (name, insurance, birthday, doc_id, center_id)
+INSERT INTO patients (name, birthday, insurance, disease, doc_id, center_id)
 VALUES
-('Pikachu', 'Medi-Pok', '2020-03-16', 2, 2),
-('Peter Parker', 'New York Life', '1997-12-15', 1, 1);
+('Pikachu', '2020-03-16', 'Medi-Pok', 4, 2, 2),
+('Peter Parker', '1997-12-15', 'New York Life', 1, 1, 1);
